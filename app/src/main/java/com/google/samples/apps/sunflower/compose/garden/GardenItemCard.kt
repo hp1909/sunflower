@@ -1,15 +1,10 @@
 package com.google.samples.apps.sunflower.compose.garden
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,7 +21,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.google.samples.apps.sunflower.R
+import com.google.samples.apps.sunflower.compose.utils.AppliedDarkTheme
 import com.google.samples.apps.sunflower.viewmodels.PlantAndGardenPlantingsViewModel
+import kotlinx.coroutines.newSingleThreadContext
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -54,86 +51,93 @@ fun GardenItemCard(
                 contentDescription = stringResource(id = R.string.a11y_plant_item_image),
                 contentScale = ContentScale.Crop
             )
-            Text(
-                text = viewModel.plantName,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                fontFamily = FontFamily.SansSerif,
-                textAlign = TextAlign.Center,
-                fontSize = 16.sp
-            )
+            Spacer(modifier = Modifier.size(8.dp, 8.dp))
+            AppliedDarkTheme(darkColor = Color.Black, lightColor = Color.White) {
+                Text(
+                    text = viewModel.plantName,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    maxLines = 1,
+                    fontSize = 16.sp,
+                    overflow = TextOverflow.Ellipsis,
+                    fontFamily = FontFamily.SansSerif,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colors.primary
+                )
+            }
+            Spacer(modifier = Modifier.size(16.dp, 16.dp))
             Text(
                 text = stringResource(id = R.string.plant_date_header),
                 modifier = Modifier
                     .fillMaxWidth(),
                 maxLines = 1,
+                fontSize = 16.sp,
                 overflow = TextOverflow.Ellipsis,
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colors.secondaryVariant,
                 textAlign = TextAlign.Center,
-                fontSize = 16.sp
             )
-            Text(
-                text = viewModel.plantDateString,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.SemiBold,
-                color = Color.Black,
-                textAlign = TextAlign.Center,
-                fontSize = 16.sp
-            )
+            AppliedDarkTheme(darkColor = Color.Black, lightColor = Color.White) {
+                Text(
+                    text = viewModel.plantDateString,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    maxLines = 1,
+                    fontSize = 16.sp,
+                    overflow = TextOverflow.Ellipsis,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colors.primary,
+                    textAlign = TextAlign.Center
+                )
+            }
+            Spacer(modifier = Modifier.size(16.dp, 16.dp))
             Text(
                 text = stringResource(id = R.string.watered_date_header),
                 modifier = Modifier
                     .fillMaxWidth(),
                 maxLines = 1,
+                fontSize = 16.sp,
                 overflow = TextOverflow.Ellipsis,
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colors.secondaryVariant,
-                textAlign = TextAlign.Center,
-                fontSize = 16.sp
+                textAlign = TextAlign.Center
             )
-            Text(
-                text = viewModel.plantDateString,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.SemiBold,
-                color = Color.Black,
-                textAlign = TextAlign.Center,
-                fontSize = 16.sp
-            )
-            Text(
-                text = LocalContext.current.resources.getQuantityString(
-                    R.plurals.watering_next,
-                    viewModel.wateringInterval,
-                    viewModel.wateringInterval
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.SemiBold,
-                color = Color.Black,
-                textAlign = TextAlign.Center,
-                fontSize = 16.sp
-            )
+            AppliedDarkTheme(darkColor = Color.Black, lightColor = Color.White) {
+                Text(
+                    text = viewModel.plantDateString,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    maxLines = 1,
+                    fontSize = 16.sp,
+                    overflow = TextOverflow.Ellipsis,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colors.primary,
+                    textAlign = TextAlign.Center
+                )
+            }
+            AppliedDarkTheme(darkColor = Color.Black, lightColor = Color.White) {
+                Text(
+                    text = LocalContext.current.resources.getQuantityString(
+                        R.plurals.watering_next,
+                        viewModel.wateringInterval,
+                        viewModel.wateringInterval
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                    maxLines = 1,
+                    fontSize = 16.sp,
+                    overflow = TextOverflow.Ellipsis,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colors.primary,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
-}
-
-@Preview
-@Composable
-fun previewGarden() {
 }

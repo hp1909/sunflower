@@ -2,10 +2,12 @@ package com.google.samples.apps.sunflower.compose.plantlist
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import coil.transform.GrayscaleTransformation
 import com.google.samples.apps.sunflower.R
+import com.google.samples.apps.sunflower.compose.utils.AppliedDarkTheme
 import com.google.samples.apps.sunflower.data.Plant
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -29,9 +32,10 @@ fun PlantItemCard(plant: Plant?, onItemClick: (Plant) -> Unit) {
             modifier = Modifier.padding(12.dp, 0.dp, 12.dp, 26.dp),
             shape = RoundedCornerShape(bottomStart = 8.dp),
             elevation = 2.dp,
+            backgroundColor = if (isSystemInDarkTheme()) Color.Black else Color.White,
             onClick = { onItemClick(it) }
         ) {
-            Column {
+            Column() {
                 Image(
                     modifier = Modifier
                         .height(95.dp)
@@ -45,16 +49,18 @@ fun PlantItemCard(plant: Plant?, onItemClick: (Plant) -> Unit) {
                     contentScale = ContentScale.Crop,
                     contentDescription = stringResource(id = R.string.a11y_plant_item_image)
                 )
-                Text(
-                    modifier = Modifier
-                        .background(Color.White)
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    text = it.name,
-                    textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+                AppliedDarkTheme(darkColor = Color.Black, lightColor = Color.White) {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        text = it.name,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        color = MaterialTheme.colors.primary,
+                    )
+                }
             }
         }
     }
